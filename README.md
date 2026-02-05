@@ -256,14 +256,35 @@ curl -X GET http://localhost:5000/user/history \
 
 ```
 nasa-weather-app/
-├── models/
-│   ├── Weather.js          # Weather data model
-│   └── User.js             # User model with authentication
-├── server.js               # Main server file
-├── package.json            # Dependencies and scripts
-├── seed.js                 # Database seeding script
+├── controllers/              # Route controllers
+│   ├── userController.js     # User authentication and history logic
+│   └── weatherController.js  # Weather probability calculation logic
+├── middleware/               # Custom middleware
+│   └── validateTokenHandler.js  # JWT authentication middleware
+├── models/                   # Database models
+│   ├── Weather.js           # Weather data model
+│   └── User.js              # User model with authentication
+├── routes/                   # API routes
+│   ├── userRoute.js         # User authentication routes
+│   └── weatherRoute.js      # Weather data routes
+├── config/                   # Configuration files
+├── server.js                # Main server file (Express setup)
+├── package.json             # Dependencies and scripts
+├── seed.js                  # Database seeding script
+├── .env                     # Environment variables
+├── .gitignore              # Git ignore file
 └── README.md               # This file
 ```
+
+### Architecture Overview
+
+The application follows the **Model-View-Controller (MVC)** pattern:
+
+- **Models**: Define database schemas and data structures
+- **Controllers**: Handle business logic and request processing
+- **Routes**: Define API endpoints and map to controllers
+- **Middleware**: Handle authentication and cross-cutting concerns
+- **Server**: Configures Express app and connects all components
 
 ## 🔒 Security Considerations
 
@@ -278,17 +299,25 @@ nasa-weather-app/
 Create a `.env` file in the root directory:
 
 ```env
-# MongoDB Connection
+# JWT Secret Key (change this in production)
+JWT_SECRET=your-secret-key-change-in-production
+
+# MongoDB Connection String
 MONGODB_URI=mongodb://localhost:27017/nasa-weather-app
-# or for MongoDB Atlas:
-# MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/database
 
-# JWT Secret (change in production)
-JWT_SECRET=your-super-secret-jwt-key
-
-# Server Port (optional)
+# Server Configuration
 PORT=5000
+NODE_ENV=development
 ```
+
+### Environment Files
+
+- `.env` - Development environment (included in repository)
+- `.env.local` - Local overrides (ignored by git)
+- `.env.production` - Production secrets (ignored by git)
+- `.env.staging` - Staging environment (ignored by git)
+
+**⚠️ Security Note**: Never commit files containing real secrets or API keys to version control.
 
 ## 🚨 Troubleshooting
 
@@ -396,6 +425,24 @@ If you encounter any issues or have questions:
 - **v1.0.0**: Initial release with basic weather probability API
 - **v2.0.0**: Added user authentication and search history tracking
 - **v2.1.0**: Enhanced error handling and security features
+- **v3.0.0**: **Refactored to MVC architecture** - Separated routes, controllers, and middleware for better code organization and maintainability
+
+### Recent Changes (v3.0.0)
+
+✨ **New Features:**
+
+- MVC architecture implementation
+- Separated authentication middleware
+- Modular route controllers
+- Enhanced project structure
+- Environment configuration management
+
+🔧 **Improvements:**
+
+- Better code organization
+- Improved maintainability
+- Cleaner server.js file
+- Proper separation of concerns
 
 ---
 
